@@ -1,0 +1,25 @@
+# ─── StyleMirror Root Dockerignore ───
+.git
+.gitignore
+.github
+.vscode
+.idea
+*.log
+dist
+build
+node_modules
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env
+venv
+.venv
+*.egg-info
+.pytest_cache
+.ruff_cache
+docs
+coverage
+.DS_Store
+Thumbs.db
