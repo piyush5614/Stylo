@@ -1,0 +1,1562 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "StyleMirror API",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Check Health",
+        "description": "Returns service health status, version, and current UTC timestamp.",
+        "operationId": "check_health_api_v1_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/sessions": {
+      "post": {
+        "tags": [
+          "sessions"
+        ],
+        "summary": "Create Anonymous Session",
+        "description": "Creates an anonymous session with 24-hour expiration.\nRequires explicit user consent for in-memory image processing.",
+        "operationId": "create_anonymous_session_api_v1_sessions_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSessionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/catalog/garments": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "summary": "List Garments",
+        "description": "Lists active garments with filtering and pagination.",
+        "operationId": "list_garments_api_v1_catalog_garments_get",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by category (top, bottom, etc.)",
+              "title": "Category"
+            },
+            "description": "Filter by category (top, bottom, etc.)"
+          },
+          {
+            "name": "occasion",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by occasion tag",
+              "title": "Occasion"
+            },
+            "description": "Filter by occasion tag"
+          },
+          {
+            "name": "fabric_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by fabric ID",
+              "title": "Fabric Id"
+            },
+            "description": "Filter by fabric ID"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Items per page",
+              "default": 20,
+              "title": "Limit"
+            },
+            "description": "Items per page"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Pagination offset",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "Pagination offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedGarmentsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/catalog/garments/{slug}": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Get Garment Detail",
+        "description": "Retrieves single garment details including colors, sizes, and fabric profile.",
+        "operationId": "get_garment_detail_api_v1_catalog_garments__slug__get",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Slug"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GarmentDetailResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/catalog/fabrics": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "summary": "List Fabrics",
+        "description": "Lists all available fabrics with their care guidelines and textile ratings.",
+        "operationId": "list_fabrics_api_v1_catalog_fabrics_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/FabricResponse"
+                  },
+                  "type": "array",
+                  "title": "Response List Fabrics Api V1 Catalog Fabrics Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/catalog/fabrics/{slug}": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "summary": "Get Fabric Detail",
+        "description": "Retrieves full fabric details by slug.",
+        "operationId": "get_fabric_detail_api_v1_catalog_fabrics__slug__get",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Slug"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FabricResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/measurements/analyze": {
+      "post": {
+        "tags": [
+          "measurements"
+        ],
+        "summary": "Analyze Measurements",
+        "description": "Analyzes captured pose landmarks and views to compute body dimensions.\nPhotos are decoded in memory, never written to disk, and immediately discarded.\nDerived numbers are stored to body_profiles linked to the session.",
+        "operationId": "analyze_measurements_api_v1_measurements_analyze_post",
+        "parameters": [
+          {
+            "name": "X-Session-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Session-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyzeMeasurementsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeasurementAnalysisResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/measurements/profile": {
+      "get": {
+        "tags": [
+          "measurements"
+        ],
+        "summary": "Get Current Profile",
+        "description": "Retrieves current derived body measurements for the active session.",
+        "operationId": "get_current_profile_api_v1_measurements_profile_get",
+        "parameters": [
+          {
+            "name": "X-Session-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Session-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/MeasurementAnalysisResponse"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "title": "Response Get Current Profile Api V1 Measurements Profile Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/measurements/profile/overrides": {
+      "put": {
+        "tags": [
+          "measurements"
+        ],
+        "summary": "Update Profile Overrides",
+        "description": "Updates manual overrides for any dimension on the active session profile.",
+        "operationId": "update_profile_overrides_api_v1_measurements_profile_overrides_put",
+        "parameters": [
+          {
+            "name": "X-Session-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Session-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBodyProfileRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeasurementAnalysisResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tryon/fit": {
+      "get": {
+        "tags": [
+          "tryon"
+        ],
+        "summary": "Get Garment Fit",
+        "description": "Evaluate garment fit, recommended size, and runner-up size for the active session.",
+        "operationId": "get_garment_fit_api_v1_tryon_fit_get",
+        "parameters": [
+          {
+            "name": "garment",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Garment slug to fit",
+              "title": "Garment"
+            },
+            "description": "Garment slug to fit"
+          },
+          {
+            "name": "session",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Fallback query session id",
+              "title": "Session"
+            },
+            "description": "Fallback query session id"
+          },
+          {
+            "name": "X-Session-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Session-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitRecommendationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnalyzeMeasurementsRequest": {
+        "properties": {
+          "height_cm": {
+            "type": "number",
+            "maximum": 260.0,
+            "minimum": 80.0,
+            "title": "Height Cm",
+            "description": "User ground-truth height in cm"
+          },
+          "poses": {
+            "items": {
+              "$ref": "#/components/schemas/CapturedPosePayload"
+            },
+            "type": "array",
+            "maxItems": 12,
+            "minItems": 1,
+            "title": "Poses"
+          }
+        },
+        "type": "object",
+        "required": [
+          "height_cm",
+          "poses"
+        ],
+        "title": "AnalyzeMeasurementsRequest"
+      },
+      "AreaFitDetail": {
+        "properties": {
+          "area": {
+            "type": "string",
+            "title": "Area",
+            "description": "chest, waist, hip, shoulder, inseam, or length"
+          },
+          "body_cm": {
+            "type": "number",
+            "title": "Body Cm",
+            "description": "User body measurement in cm"
+          },
+          "garment_cm": {
+            "type": "number",
+            "title": "Garment Cm",
+            "description": "Garment finished dimension in cm"
+          },
+          "ease_cm": {
+            "type": "number",
+            "title": "Ease Cm",
+            "description": "Garment ease (garment_cm - body_cm)"
+          },
+          "fit_status": {
+            "type": "string",
+            "title": "Fit Status",
+            "description": "tight, snug, ideal, comfortable, or loose"
+          },
+          "comment": {
+            "type": "string",
+            "title": "Comment",
+            "description": "Human-readable description for UI display"
+          }
+        },
+        "type": "object",
+        "required": [
+          "area",
+          "body_cm",
+          "garment_cm",
+          "ease_cm",
+          "fit_status",
+          "comment"
+        ],
+        "title": "AreaFitDetail"
+      },
+      "CapturedPosePayload": {
+        "properties": {
+          "angle": {
+            "type": "string",
+            "title": "Angle",
+            "description": "front, right, back, or left"
+          },
+          "landmarks": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/LandmarkPoint"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Landmarks"
+          },
+          "image_base64": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image Base64"
+          }
+        },
+        "type": "object",
+        "required": [
+          "angle"
+        ],
+        "title": "CapturedPosePayload"
+      },
+      "CreateSessionRequest": {
+        "properties": {
+          "consent_given": {
+            "type": "boolean",
+            "title": "Consent Given",
+            "description": "Explicit user consent to process ephemeral camera images in memory."
+          }
+        },
+        "type": "object",
+        "required": [
+          "consent_given"
+        ],
+        "title": "CreateSessionRequest"
+      },
+      "DimensionEstimate": {
+        "properties": {
+          "value_cm": {
+            "type": "number",
+            "title": "Value Cm",
+            "description": "Estimated measurement in cm"
+          },
+          "confidence": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence",
+            "description": "Per-dimension confidence score"
+          }
+        },
+        "type": "object",
+        "required": [
+          "value_cm",
+          "confidence"
+        ],
+        "title": "DimensionEstimate"
+      },
+      "FabricResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "benefits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Benefits"
+          },
+          "care_instructions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Care Instructions"
+          },
+          "best_seasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Best Seasons"
+          },
+          "breathability": {
+            "type": "integer",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Breathability"
+          },
+          "stretch": {
+            "type": "integer",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Stretch"
+          },
+          "durability": {
+            "type": "integer",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Durability"
+          },
+          "skin_sensitivity_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Skin Sensitivity Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "slug",
+          "description",
+          "breathability",
+          "stretch",
+          "durability"
+        ],
+        "title": "FabricResponse"
+      },
+      "FitRecommendationResponse": {
+        "properties": {
+          "garment_slug": {
+            "type": "string",
+            "title": "Garment Slug"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "fit_type": {
+            "type": "string",
+            "title": "Fit Type"
+          },
+          "recommended_size": {
+            "type": "string",
+            "title": "Recommended Size",
+            "description": "Primary size recommendation (e.g. M)"
+          },
+          "runner_up_size": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runner Up Size",
+            "description": "Alternative size if between sizes"
+          },
+          "confidence": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence"
+          },
+          "fit_summary": {
+            "type": "string",
+            "title": "Fit Summary",
+            "description": "Summary overview of overall fit"
+          },
+          "area_details": {
+            "items": {
+              "$ref": "#/components/schemas/AreaFitDetail"
+            },
+            "type": "array",
+            "title": "Area Details"
+          },
+          "available_sizes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Available Sizes"
+          },
+          "glb_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Glb Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "garment_slug",
+          "category",
+          "fit_type",
+          "recommended_size",
+          "confidence",
+          "fit_summary",
+          "area_details",
+          "available_sizes"
+        ],
+        "title": "FitRecommendationResponse"
+      },
+      "GarmentColorResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "hex": {
+            "type": "string",
+            "title": "Hex"
+          },
+          "is_default": {
+            "type": "boolean",
+            "title": "Is Default"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "hex",
+          "is_default"
+        ],
+        "title": "GarmentColorResponse"
+      },
+      "GarmentDetailResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "fit_type": {
+            "type": "string",
+            "title": "Fit Type"
+          },
+          "neckline": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Neckline"
+          },
+          "length": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Length"
+          },
+          "pattern": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pattern"
+          },
+          "occasion": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Occasion"
+          },
+          "fabric_id": {
+            "type": "string",
+            "title": "Fabric Id"
+          },
+          "fabric_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fabric Name"
+          },
+          "base_price": {
+            "type": "number",
+            "title": "Base Price"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active"
+          },
+          "thumbnail_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Thumbnail Url"
+          },
+          "fabric": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FabricResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "colors": {
+            "items": {
+              "$ref": "#/components/schemas/GarmentColorResponse"
+            },
+            "type": "array",
+            "title": "Colors"
+          },
+          "sizes": {
+            "items": {
+              "$ref": "#/components/schemas/GarmentSizeResponse"
+            },
+            "type": "array",
+            "title": "Sizes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "slug",
+          "category",
+          "fit_type",
+          "fabric_id",
+          "base_price",
+          "is_active"
+        ],
+        "title": "GarmentDetailResponse"
+      },
+      "GarmentSizeResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "size_label": {
+            "type": "string",
+            "title": "Size Label"
+          },
+          "glb_url": {
+            "type": "string",
+            "title": "Glb Url"
+          },
+          "chest_cm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chest Cm"
+          },
+          "waist_cm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Waist Cm"
+          },
+          "hip_cm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hip Cm"
+          },
+          "shoulder_cm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shoulder Cm"
+          },
+          "length_cm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Length Cm"
+          },
+          "inseam_cm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inseam Cm"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "size_label",
+          "glb_url"
+        ],
+        "title": "GarmentSizeResponse"
+      },
+      "GarmentSummaryResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "fit_type": {
+            "type": "string",
+            "title": "Fit Type"
+          },
+          "neckline": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Neckline"
+          },
+          "length": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Length"
+          },
+          "pattern": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pattern"
+          },
+          "occasion": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Occasion"
+          },
+          "fabric_id": {
+            "type": "string",
+            "title": "Fabric Id"
+          },
+          "fabric_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fabric Name"
+          },
+          "base_price": {
+            "type": "number",
+            "title": "Base Price"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active"
+          },
+          "thumbnail_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Thumbnail Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "slug",
+          "category",
+          "fit_type",
+          "fabric_id",
+          "base_price",
+          "is_active"
+        ],
+        "title": "GarmentSummaryResponse"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HealthResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "description": "Service status: ok, degraded, down",
+            "default": "ok"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version",
+            "description": "API version string"
+          },
+          "timestamp": {
+            "type": "string",
+            "title": "Timestamp",
+            "description": "ISO 8601 UTC timestamp"
+          }
+        },
+        "type": "object",
+        "required": [
+          "version",
+          "timestamp"
+        ],
+        "title": "HealthResponse",
+        "description": "API health status report."
+      },
+      "LandmarkPoint": {
+        "properties": {
+          "x": {
+            "type": "number",
+            "title": "X"
+          },
+          "y": {
+            "type": "number",
+            "title": "Y"
+          },
+          "z": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Z",
+            "default": 0.0
+          },
+          "visibility": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Visibility",
+            "default": 1.0
+          }
+        },
+        "type": "object",
+        "required": [
+          "x",
+          "y"
+        ],
+        "title": "LandmarkPoint"
+      },
+      "MeasurementAnalysisResponse": {
+        "properties": {
+          "height_cm": {
+            "type": "number",
+            "title": "Height Cm"
+          },
+          "shoulder_cm": {
+            "$ref": "#/components/schemas/DimensionEstimate"
+          },
+          "chest_cm": {
+            "$ref": "#/components/schemas/DimensionEstimate"
+          },
+          "waist_cm": {
+            "$ref": "#/components/schemas/DimensionEstimate"
+          },
+          "hip_cm": {
+            "$ref": "#/components/schemas/DimensionEstimate"
+          },
+          "inseam_cm": {
+            "$ref": "#/components/schemas/DimensionEstimate"
+          },
+          "torso_cm": {
+            "$ref": "#/components/schemas/DimensionEstimate"
+          },
+          "overall_confidence": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Overall Confidence"
+          },
+          "body_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Body Type"
+          },
+          "manual_overrides": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Manual Overrides"
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer",
+            "default": "Measurements are algorithmic estimates calculated from camera landmarks and silhouettes. They are not medical or exact tape-measure readings. You may adjust any number manually."
+          }
+        },
+        "type": "object",
+        "required": [
+          "height_cm",
+          "shoulder_cm",
+          "chest_cm",
+          "waist_cm",
+          "hip_cm",
+          "inseam_cm",
+          "torso_cm",
+          "overall_confidence"
+        ],
+        "title": "MeasurementAnalysisResponse"
+      },
+      "PaginatedGarmentsResponse": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/GarmentSummaryResponse"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "limit",
+          "offset"
+        ],
+        "title": "PaginatedGarmentsResponse"
+      },
+      "SessionResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "Unique UUID for the anonymous session"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "description": "UTC creation timestamp"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At",
+            "description": "UTC expiration timestamp (default 24h)"
+          },
+          "consent_given": {
+            "type": "boolean",
+            "title": "Consent Given",
+            "description": "Consent status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "created_at",
+          "expires_at",
+          "consent_given"
+        ],
+        "title": "SessionResponse"
+      },
+      "UpdateBodyProfileRequest": {
+        "properties": {
+          "height_cm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Height Cm"
+          },
+          "shoulder_cm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shoulder Cm"
+          },
+          "chest_cm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chest Cm"
+          },
+          "waist_cm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Waist Cm"
+          },
+          "hip_cm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hip Cm"
+          },
+          "inseam_cm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inseam Cm"
+          },
+          "torso_cm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Torso Cm"
+          },
+          "manual_overrides": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Manual Overrides"
+          }
+        },
+        "type": "object",
+        "title": "UpdateBodyProfileRequest"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

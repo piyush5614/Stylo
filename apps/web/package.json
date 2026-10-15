@@ -1,0 +1,48 @@
+{
+  "name": "stylemirror-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "gen:types": "openapi-typescript ../api/openapi.json -o ./src/types/api-schema.ts"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "^1.1.0",
+    "@react-three/drei": "^10.0.6",
+    "@react-three/fiber": "^9.1.2",
+    "@tanstack/react-query": "^5.80.7",
+    "framer-motion": "^12.12.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.6.1",
+    "three": "^0.175.0",
+    "zustand": "^5.0.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.8",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^22.15.0",
+    "@types/react": "^18.3.20",
+    "@types/react-dom": "^18.3.6",
+    "@types/three": "^0.175.0",
+    "@vitejs/plugin-react": "^4.5.2",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.28.0",
+    "jsdom": "^26.1.0",
+    "openapi-typescript": "^7.13.0",
+    "prettier": "^3.5.3",
+    "tailwindcss": "^4.1.8",
+    "typescript": "~5.7.3",
+    "vite": "^6.3.5",
+    "vitest": "^3.2.1"
+  }
+}

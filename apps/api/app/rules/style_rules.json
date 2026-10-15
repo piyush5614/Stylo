@@ -1,0 +1,86 @@
+{
+  "body_type_rules": {
+    "hourglass": {
+      "favored_fits": ["regular", "slim"],
+      "favored_necklines": ["V-Neck", "Camp Collar", "Crewneck"],
+      "reasons": [
+        "Follows and highlights your balanced proportions with natural waist definition",
+        "Gentle open collar frames the neckline without crowding your frame"
+      ]
+    },
+    "inverted_triangle": {
+      "favored_fits": ["relaxed", "regular"],
+      "favored_necklines": ["V-Neck", "Camp Collar", "Scoop"],
+      "bottom_favored": ["relaxed", "straight", "pleated"],
+      "reasons": [
+        "Softer, open neckline balances athletic shoulder breadth",
+        "Straight or relaxed bottoms create visual symmetry down through the hips"
+      ]
+    },
+    "pear": {
+      "favored_fits": ["regular", "structured"],
+      "favored_necklines": ["Boatneck", "Crewneck", "Camp Collar"],
+      "bottom_favored": ["straight", "relaxed"],
+      "reasons": [
+        "Draws flattering focus across the shoulders to create upper-body harmony",
+        "Clean, straight vertical lines drape gracefully over the hips"
+      ]
+    },
+    "rectangle": {
+      "favored_fits": ["relaxed", "regular", "oversized"],
+      "favored_necklines": ["Crewneck", "Camp Collar", "Ribbed Crew"],
+      "reasons": [
+        "Adds effortless dimension and visual texture along a streamlined silhouette",
+        "Relaxed fit offers natural movement and easy layering versatility"
+      ]
+    },
+    "round": {
+      "favored_fits": ["relaxed", "regular"],
+      "favored_necklines": ["V-Neck", "Camp Collar"],
+      "reasons": [
+        "Clean vertical lines create an elongating, breathable drape",
+        "Softly structured silhouette ensures relaxed all-day comfort"
+      ]
+    },
+    "undetermined": {
+      "favored_fits": ["regular", "relaxed"],
+      "favored_necklines": ["Crewneck", "Camp Collar"],
+      "reasons": [
+        "Versatile everyday silhouette designed to adapt across varied proportions",
+        "Balanced cut ensures comfortable ease and timeless style"
+      ]
+    }
+  },
+  "color_rules": {
+    "warm": {
+      "favored_hues": ["#E3DAC9", "#dfb08c", "#8F9779", "#2B1E16", "#3D4A3E"],
+      "reason": "Earthy, warm tones harmonize naturally with golden and olive undertones"
+    },
+    "cool": {
+      "favored_hues": ["#1A1A1A", "#243447", "#1B263B", "#4E6E82", "#4A5568", "#FFFFFF"],
+      "reason": "Crisp navies, deep indigos, and cool neutrals complement your cool undertone"
+    },
+    "neutral": {
+      "favored_hues": ["#FFFFFF", "#1A1A1A", "#333333", "#D8CBB5", "#8F9779"],
+      "reason": "Balanced neutrals provide a timeless, effortless canvas for your complexion"
+    }
+  },
+  "height_rules": {
+    "petite": {
+      "max_height_cm": 164,
+      "favored_lengths": ["Waist Length", "Hip Length", "Ankle Length"],
+      "reason": "Cropped or hip-length cuts elongate leg lines and preserve vertical balance"
+    },
+    "average": {
+      "min_height_cm": 165,
+      "max_height_cm": 182,
+      "favored_lengths": ["Hip Length", "Full Length", "Waist Length"],
+      "reason": "Standard proportions maintain natural drape without dragging"
+    },
+    "tall": {
+      "min_height_cm": 183,
+      "favored_lengths": ["Full Length", "Hip Length"],
+      "reason": "Generous full-length hem balances tall stature gracefully"
+    }
+  }
+}
