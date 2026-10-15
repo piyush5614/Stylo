@@ -11,3 +11,4 @@ __pycache__/
 coverage/
 .DS_Store
 Thumbs.db
+tests/fixtures/private/

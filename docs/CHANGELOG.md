@@ -4,6 +4,16 @@ All notable changes across development milestones (Parts 1 through 11).
 
 ---
 
+## [Part 13] - 2026-10-16: Decision Log & Code Flow Map
+- **Decision Log (`docs/decisions.md`):** Complete index and detailed architecture records for DEC-001 through DEC-012 covering privacy, algorithms, 3D graphics, rule engine, and DevOps.
+- **Code Flow Map (`docs/flow.md`):** Comprehensive Mermaid sequence diagram and step-by-step function execution hierarchy across camera capture, measurement, avatar morphing, procedural fitting, recommendations, and instant data purging.
+- **Test & Bug Log (`docs/TEST_LOG.md`):** Permanent ledger of bugs identified, root cause analyses, and test suite pass rates.
+
+## [Part 12] - 2026-10-16: Live End-to-End Testing & Verification
+- **Automated Synthetic Suite:** Implemented `apps/api/app/tests/test_part12_edge_cases.py` testing dark/blurry frames, extreme height validations, and RAM zero-storage guarantees.
+- **Web Component Tests:** Implemented `apps/web/src/app/pages/__tests__/Part12Components.test.tsx` verifying session storage, filter bars, fabric drawers, and recommendation cards.
+- **Real-Photo Accuracy Tooling:** Created `apps/api/scripts/accuracy_check.py` with synthetic body profiles for repeatable measurement calibration.
+
 ## [Part 11] - 2026-10-16: Containerisation & Handover Documentation
 - **Docker Multi-Stage Builds:** Multi-stage non-root `Dockerfile` for FastAPI backend and multi-stage Nginx container for Vite frontend.
 - **Single-Origin Architecture:** Nginx internal proxy on `/api/` routing to the API container.

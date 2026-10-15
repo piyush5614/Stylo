@@ -1,0 +1,26 @@
+{
+  "description": "Synthetic front-view MediaPipe-normalized landmarks for a 178cm human model (anatomically plausible).",
+  "landmark_count": 33,
+  "coordinate_space": "normalized 0..1, top-left origin",
+  "landmarks": [
+    {"index": 0,  "name": "nose",          "x": 0.50, "y": 0.18, "z": 0.00, "visibility": 0.99},
+    {"index": 11, "name": "left_shoulder", "x": 0.39, "y": 0.28, "z": 0.00, "visibility": 0.98},
+    {"index": 12, "name": "right_shoulder","x": 0.61, "y": 0.28, "z": 0.00, "visibility": 0.98},
+    {"index": 23, "name": "left_hip",      "x": 0.41, "y": 0.54, "z": 0.00, "visibility": 0.96},
+    {"index": 24, "name": "right_hip",     "x": 0.59, "y": 0.54, "z": 0.00, "visibility": 0.96},
+    {"index": 25, "name": "left_knee",     "x": 0.46, "y": 0.72, "z": 0.00, "visibility": 0.95},
+    {"index": 26, "name": "right_knee",    "x": 0.54, "y": 0.72, "z": 0.00, "visibility": 0.95},
+    {"index": 27, "name": "left_ankle",    "x": 0.46, "y": 0.90, "z": 0.00, "visibility": 0.95},
+    {"index": 28, "name": "right_ankle",   "x": 0.54, "y": 0.90, "z": 0.00, "visibility": 0.95},
+    {"index": 29, "name": "left_heel",     "x": 0.46, "y": 0.93, "z": 0.00, "visibility": 0.94},
+    {"index": 30, "name": "right_heel",    "x": 0.54, "y": 0.93, "z": 0.00, "visibility": 0.94}
+  ],
+  "expected_outputs_at_178cm": {
+    "shoulder_cm_range": [40.0, 50.0],
+    "torso_cm_range":    [44.0, 58.0],
+    "inseam_cm_range":   [72.0, 90.0],
+    "chest_cm_range":    [82.0, 108.0],
+    "waist_cm_range":    [68.0, 100.0],
+    "hip_cm_range":      [86.0, 112.0]
+  }
+}

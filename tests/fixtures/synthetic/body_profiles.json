@@ -1,0 +1,47 @@
+[
+  {
+    "id": "profile_slim_tall",
+    "label": "Slim / Tall",
+    "description": "178 cm tall, lean build — typical for a tall slender person",
+    "height_cm": 178.0,
+    "shoulder_cm": 42.0,
+    "chest_cm": 88.0,
+    "waist_cm": 72.0,
+    "hip_cm": 90.0,
+    "inseam_cm": 84.0,
+    "torso_cm": 50.0,
+    "expected_body_type": "rectangle",
+    "expected_size_top": "S",
+    "expected_size_bottom": "S"
+  },
+  {
+    "id": "profile_average",
+    "label": "Average Build",
+    "description": "175 cm, average proportions — mid-range in all dimensions",
+    "height_cm": 175.0,
+    "shoulder_cm": 46.0,
+    "chest_cm": 96.0,
+    "waist_cm": 80.0,
+    "hip_cm": 98.0,
+    "inseam_cm": 78.0,
+    "torso_cm": 52.0,
+    "expected_body_type": "rectangle",
+    "expected_size_top": "M",
+    "expected_size_bottom": "M"
+  },
+  {
+    "id": "profile_broad_short",
+    "label": "Broad / Short",
+    "description": "162 cm, broad shoulders, wider hip — stockier build",
+    "height_cm": 162.0,
+    "shoulder_cm": 52.0,
+    "chest_cm": 108.0,
+    "waist_cm": 94.0,
+    "hip_cm": 106.0,
+    "inseam_cm": 70.0,
+    "torso_cm": 48.0,
+    "expected_body_type": "rectangle",
+    "expected_size_top": "XL",
+    "expected_size_bottom": "XL"
+  }
+]
