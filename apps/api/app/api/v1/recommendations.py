@@ -96,7 +96,8 @@ async def get_personalized_recommendations(
         g.model_dump() if hasattr(g, "model_dump") else g for g in garment_items
     ]
 
-    return score_and_recommend_garments(
+    # Compute deterministic recommendations first (rules decide everything)
+    base_result = score_and_recommend_garments(
         session_id=active_session_id,
         garments=garments_dict,
         body_measurements=body_measurements,
@@ -106,6 +107,27 @@ async def get_personalized_recommendations(
         occasion=occasion,
         season=season,
     )
+
+    # Optional Part 10 Upgrade C: LLM stylist commentary layer on top of rule picks
+    from app.services.llm_stylist import generate_styling_commentary
+
+    items_dict = [it.model_dump() for it in base_result.items]
+    capsule_summary, item_notes = await generate_styling_commentary(
+        body_type=body_type,
+        undertone=undertone,
+        depth=depth,
+        height_cm=body_measurements.get("height_cm", 172.0),
+        items=items_dict,
+    )
+
+    # Attach AI commentary to items
+    for item in base_result.items:
+        slug = item.garment.slug
+        if slug in item_notes:
+            item.ai_stylist_note = item_notes[slug]
+
+    base_result.ai_capsule_summary = capsule_summary
+    return base_result
 
 
 @router.get("/fabrics/{slug}/insights", response_model=FabricInsightResponse)

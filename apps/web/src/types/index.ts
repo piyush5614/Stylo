@@ -52,6 +52,7 @@ export interface RecommendationItem {
   suggested_color?: GarmentColor | null;
   reasons: string[];
   fabric_highlight: string;
+  ai_stylist_note?: string | null;
 }
 
 export interface PersonalizedRecommendationsResponse {
@@ -64,6 +65,7 @@ export interface PersonalizedRecommendationsResponse {
   season_filter?: string | null;
   items: RecommendationItem[];
   how_we_chose_these: Record<string, unknown>;
+  ai_capsule_summary?: string | null;
 }
 
 // ─── Frontend Helper Types ───

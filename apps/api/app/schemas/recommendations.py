@@ -29,6 +29,9 @@ class RecommendationItem(BaseModel):
     suggested_color: GarmentColorResponse | None = None
     reasons: list[str] = Field(..., min_length=1, max_length=5, description="Plain-language styling reasons")
     fabric_highlight: str = Field(..., description="Short fabric suitability line")
+    ai_stylist_note: str | None = Field(
+        None, description="Optional LLM-generated personal stylist reflection based on rule decisions"
+    )
 
 
 class PersonalizedRecommendationsResponse(BaseModel):
@@ -41,3 +44,6 @@ class PersonalizedRecommendationsResponse(BaseModel):
     season_filter: str | None = None
     items: list[RecommendationItem]
     how_we_chose_these: dict[str, Any]
+    ai_capsule_summary: str | None = Field(
+        None, description="Optional LLM-written overview synthesized strictly from the rule-based picks"
+    )

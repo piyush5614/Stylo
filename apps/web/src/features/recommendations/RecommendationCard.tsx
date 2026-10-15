@@ -78,7 +78,7 @@ export const RecommendationCard: React.FC<RecommendationCardProps> = ({
         )}
 
         {/* Explainable Reasons */}
-        <div className="space-y-1.5 mb-4 p-3 rounded-xl bg-neutral-950/60 border border-neutral-800/80">
+        <div className="space-y-1.5 mb-3 p-3 rounded-xl bg-neutral-950/60 border border-neutral-800/80">
           <span className="text-[11px] uppercase tracking-wider font-semibold text-neutral-400 block mb-1">
             Why this works for your profile
           </span>
@@ -89,6 +89,14 @@ export const RecommendationCard: React.FC<RecommendationCardProps> = ({
             </div>
           ))}
         </div>
+
+        {/* Optional Upgrade C: AI Stylist Note */}
+        {item.ai_stylist_note && (
+          <div className="mb-4 p-2.5 rounded-xl bg-amber-500/5 border border-amber-500/20 text-xs text-amber-200/90 italic flex items-start gap-2">
+            <span className="text-sm not-italic">✨</span>
+            <span>"{item.ai_stylist_note}"</span>
+          </div>
+        )}
 
         {/* Fabric Highlight Badge */}
         {fabric_highlight && (

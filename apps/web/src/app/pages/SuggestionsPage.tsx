@@ -136,6 +136,21 @@ export const SuggestionsPage: React.FC = () => {
         onUpdateDepth={handleUpdateDepth}
       />
 
+      {/* Optional Upgrade C: AI Capsule Summary */}
+      {data?.ai_capsule_summary && (
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-neutral-900 to-amber-500/5 border border-amber-500/20 flex items-start gap-3">
+          <span className="text-xl">✨</span>
+          <div>
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-400 block mb-0.5">
+              Stylist Synthesis
+            </span>
+            <p className="text-sm text-neutral-200 leading-relaxed">
+              {data.ai_capsule_summary}
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Occasion & Climate / Season Filters */}
       <FilterBar
         selectedOccasion={occasion}

@@ -14,6 +14,10 @@ class Settings(BaseSettings):
     # CORS
     cors_origins: str = "http://localhost:5173"
 
+    # LLM Styling Layer (Optional Upgrade C)
+    llm_api_key: str = ""
+    llm_model: str = "gemini-2.5-flash"
+
     # App
     app_name: str = "StyleMirror API"
     app_version: str = "0.1.0"
